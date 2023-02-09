@@ -17,6 +17,7 @@ if($_GET['ket']=='tambahmenu'){
 	$jumlah = $_POST['jumlah'];
 	$ket = $_POST['keterangan'];
 	$hargamanual = $_POST['hargamanual'];
+	$manualdiskon = $_POST['diskon'];
 
 	$sql="SELECT * from barang where barang_id='$id'";
 	$query=mysqli_query($con,$sql);
@@ -50,6 +51,12 @@ if($_GET['ket']=='tambahmenu'){
 		if ($diskon!=0) {
 			$harga = $harga - $diskon;
 		}
+
+		if ($manualdiskon!=0) {
+			$diskon = $harga*$manualdiskon/100;
+			$harga = $harga - $diskon; 
+		}
+		
 
 		$tot = $harga*$jumlah;
 		
@@ -186,9 +193,10 @@ if($_GET['ket']=='tambahmenu'){
 
 	$idmember = $_POST['idmember'];
 	$idtherapist = $_POST['idtherapist'];
+	$iddokter = $_POST['iddokter'];
 	$nama = $_POST['nama'];
 	
-	$sql = "INSERT INTO member_temp(member_temp_member_id,member_temp_user_id,member_temp_therapist,member_temp_nama)values('$idmember','$user','$idtherapist','$nama')";
+	$sql = "INSERT INTO member_temp(member_temp_member_id,member_temp_user_id,member_temp_therapist,member_temp_dokter,member_temp_nama)values('$idmember','$user','$idtherapist','$iddokter','$nama')";
 
 	mysqli_query($con,$sql);
 
@@ -202,7 +210,146 @@ if($_GET['ket']=='tambahmenu'){
 	
 	echo json_encode($array_datas);
 	
+} elseif($_GET['ket']=='pendaftaran'){
+
+	$idmember = $_POST['idmember'];
+	$iddokter = $_POST['iddokter'];
+	$keterangan = $_POST['keterangan'];
+	
+	$query1="SELECT count(*) as jumlah from pendaftaran where pendaftaran_tanggal='$tgl' and pendaftaran_user='$user'";
+	$result1 = mysqli_query($con,$query1);
+	$baris1 = mysqli_fetch_assoc($result1);
+	$nourut = $baris1['jumlah']+1;
+
+	$sql = "INSERT INTO pendaftaran(pendaftaran_no_urut,pendaftaran_tanggal,pendaftaran_waktu,pendaftaran_member,pendaftaran_dokter,pendaftaran_ket,pendaftaran_status,pendaftaran_user)values('$nourut','$tgl','$wkt','$idmember','$iddokter','$keterangan',0,'$user')";
+
+	mysqli_query($con,$sql);
+	
+	  $array_datas['member']="ok";
+	
+	
+	
+	echo json_encode($array_datas);
+	
 } elseif($_GET['ket']=='prosestransaksi'){
+	/*
+	$paytype = $_POST['ip-paytype'];
+	$jenisdiskon = $_POST['ip-jenisdiskon'];
+	$jumlahdiskon = $_POST['ip-jumlahdiskon'];
+	$tax = $_POST['ip-tax'];
+	$bayar = $_POST['ip-bayar'];
+
+	$kembalian = $bayar - $total;
+	*/
+	$total = $_POST['ip-total'];
+	$status = $_POST['ip-status'];
+
+	$sql1="SELECT * from member_temp where member_temp_user_id='$user'";
+	$query1=mysqli_query($con,$sql1);
+	$data1=mysqli_fetch_assoc($query1);
+	$member = $data1['member_temp_member_id'];
+	$namanonmember = $data1['member_temp_nama'];
+	$therapist = $data1['member_temp_therapist'];
+
+	$qcn= "SELECT MAX( transaksi_nota_print ) AS nota_print FROM transaksi";
+    $rcn=mysqli_query($con,$qcn);
+    $dcn=mysqli_fetch_assoc($rcn);
+    $nota_print = $dcn['nota_print']+1;
+
+	$sql = "INSERT INTO transaksi (transaksi_nota_print,transaksi_tanggal,transaksi_bulan,transaksi_waktu,transaksi_member,transaksi_total,transaksi_diskon,transaksi_tax,transaksi_tax_service,transaksi_bayar,transaksi_type_bayar,transaksi_user,transaksi_therapist,transaksi_nama,transaksi_ket,transaksi_status) VALUES ('$nota_print','$tgl','$bln','$wkt','$member','$total','0','0','0','0','','$user','$therapist','$namanonmember','hold','$status')" ;
+
+	mysqli_query($con,$sql);
+
+	$qn= "SELECT MAX( transaksi_id ) AS nota FROM transaksi where transaksi_user='$user'";
+    $rn=mysqli_query($con,$qn);
+    $dn=mysqli_fetch_assoc($rn);
+    $no_not = $dn['nota'];
+    $_SESSION['no-nota'] = $no_not;	
+
+    $query="SELECT * from transaksi_detail_temp where transaksi_detail_temp_user='$user'";
+	$result = mysqli_query($con,$query);
+	while($baris = mysqli_fetch_assoc($result)) {
+
+    	$barang = $baris['transaksi_detail_temp_barang_id'];
+    	$harga = $baris['transaksi_detail_temp_harga'];
+    	$hargabeli = $baris['transaksi_detail_temp_harga_beli'];
+    	$diskon = $baris['transaksi_detail_temp_diskon'];
+    	$jumlah = $baris['transaksi_detail_temp_jumlah'];
+    	$total = $baris['transaksi_detail_temp_total'];
+    	$ket = $baris['transaksi_detail_temp_keterangan'];
+    	$status = $baris['transaksi_detail_temp_status'];
+    	$user = $baris['transaksi_detail_temp_user'];
+
+
+    	$a="INSERT into transaksi_detail(transaksi_detail_nota,transaksi_detail_barang_id,transaksi_detail_harga,transaksi_detail_harga_beli,transaksi_detail_diskon,transaksi_detail_jumlah,transaksi_detail_total,transaksi_detail_keterangan,transaksi_detail_status,transaksi_detail_user)values('$no_not','$barang','$harga','$hargabeli','$diskon','$jumlah','$total','$ket','$status','$user')";
+		mysqli_query($con,$a);
+
+		//Select Stok Barang
+		$sqlstok="SELECT * from barang where barang_id='$barang'";
+        $resultstok=mysqli_query($con,$sqlstok);
+	    $datastok=mysqli_fetch_assoc($resultstok);
+
+		$awal=$datastok['barang_stok'];
+
+        if($datastok['barang_set_stok']!=0) {
+
+        	$jml_stok = $datastok['barang_stok'] - $jumlah;
+        	
+	        $sql1 = "INSERT into log_stok(user,barang,stok_awal,stok_jumlah,tanggal,alasan,keterangan)values('$user','$barang','$awal','$jml_stok','$tgl','','transaksi')";
+			mysqli_query($con,$sql1);
+
+        
+	        $sqlupdatestok = "UPDATE barang SET barang_stok='$jml_stok' WHERE barang_id='$barang'";
+	        mysqli_query($con,$sqlupdatestok);
+        }
+
+		
+    }
+
+    $_SESSION['kembalian'] = $kembalian;
+    $_SESSION['print'] = 'ya';
+    $_SESSION['order']='';
+
+    $sqldelete = "DELETE from transaksi_detail_temp where transaksi_detail_temp_user='$user'";
+    mysqli_query($con,$sqldelete);
+
+    $sqldelete1 = "DELETE from member_temp where member_temp_user_id='$user'";
+    mysqli_query($con,$sqldelete1);
+
+    $array_dataa = array('nota'=>$no_not);
+
+
+	echo json_encode($array_dataa);
+
+} elseif($_GET['ket']=='prosesbayar'){
+
+	$total = $_POST['ip-total'];
+	$payment = $_POST['ip-payment'];
+	$bayar = $_POST['ip-bayar'];
+	$id = $_POST['ip-id'];
+
+	$kembalian = $bayar - $total;
+
+
+
+    $sql = "UPDATE transaksi SET transaksi_bayar='$bayar', transaksi_type_bayar='$payment', transaksi_ket='pay' WHERE transaksi_id='$id'";
+
+	mysqli_query($con,$sql);
+
+    $_SESSION['no-nota'] = $id;	
+
+    
+    $_SESSION['kembalian'] = $kembalian;
+    $_SESSION['print'] = 'ya';
+    $_SESSION['order']='';
+
+
+    $array_dataa = array('nota'=>$id);
+
+
+	echo json_encode($array_dataa);
+
+} elseif($_GET['ket']=='prosesbayarsekarang'){
 
 	$total = $_POST['ip-total'];
 	$paytype = $_POST['ip-paytype'];
@@ -210,6 +357,7 @@ if($_GET['ket']=='tambahmenu'){
 	$jumlahdiskon = $_POST['ip-jumlahdiskon'];
 	$tax = $_POST['ip-tax'];
 	$bayar = $_POST['ip-bayar'];
+	$kontrol = date("Y-m-j", strtotime($_POST['ip-kontrol']));
 
 	$kembalian = $bayar - $total;
 
@@ -219,13 +367,14 @@ if($_GET['ket']=='tambahmenu'){
 	$member = $data1['member_temp_member_id'];
 	$namanonmember = $data1['member_temp_nama'];
 	$therapist = $data1['member_temp_therapist'];
+	$dokter = $data1['member_temp_dokter'];
 
-	$qcn= "SELECT MAX( transaksi_nota_print ) AS nota_print FROM transaksi where transaksi_type_bayar='$paytype'";
+	$qcn= "SELECT MAX( transaksi_nota_print ) AS nota_print FROM transaksi";
     $rcn=mysqli_query($con,$qcn);
     $dcn=mysqli_fetch_assoc($rcn);
     $nota_print = $dcn['nota_print']+1;
 
-	$sql = "INSERT INTO transaksi (transaksi_nota_print,transaksi_tanggal,transaksi_bulan,transaksi_waktu,transaksi_member,transaksi_total,transaksi_diskon,transaksi_tax,transaksi_tax_service,transaksi_bayar,transaksi_type_bayar,transaksi_user,transaksi_therapist,transaksi_nama,transaksi_ket) VALUES ('$nota_print','$tgl','$bln','$wkt','$member','$total','$jumlahdiskon','$tax','0','$bayar','$paytype','$user','$therapist','$namanonmember','')" ;
+	$sql = "INSERT INTO transaksi (transaksi_nota_print,transaksi_tanggal,transaksi_bulan,transaksi_waktu,transaksi_member,transaksi_total,transaksi_diskon,transaksi_tax,transaksi_tax_service,transaksi_bayar,transaksi_type_bayar,transaksi_user,transaksi_therapist,transaksi_dokter,transaksi_nama,transaksi_ket,transaksi_status,transaksi_tanggal_kontrol) VALUES ('$nota_print','$tgl','$bln','$wkt','$member','$total','$jumlahdiskon','$tax','0','$bayar','$paytype','$user','$therapist','$dokter','$namanonmember','pay','0','$kontrol')" ;
 
 	mysqli_query($con,$sql);
 

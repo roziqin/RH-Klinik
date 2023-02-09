@@ -17,6 +17,7 @@
 		$tgl2= $tgl." ".$wkt;
 		$tgl1=date('Y-m-j', strtotime('-1 day', strtotime($tgl)));
 		// username and password sent from Form
+		$type=$_POST['var_type'];
 		$myusername=$_POST['var_usn'];
 		$mypassword=md5($_POST['var_pwd']);
 		$sql="select * from users, roles where role=roles_id and username = '$myusername' and password = '$mypassword' ";
@@ -36,8 +37,9 @@
 			$_SESSION['namauser']     = $data['username'];
 			$_SESSION['passuser']     = $data['password'];
 			$_SESSION['role']		  = $data['roles_name'];
+			$_SESSION['type']		  = $type;
 			$_SESSION['order_type']		  = 'null';
-			echo $data['roles_name'];
+			echo $_SESSION['type'];
 		} else {
 			echo 'salah';
 		}

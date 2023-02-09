@@ -1,6 +1,6 @@
 <?php 
 session_start();
-$con = mysqli_connect("localhost","root","","salon_kecantikan");
+$con = mysqli_connect("localhost","root","","klinik_new");
 include '../../../include/format_rupiah.php';
 
 $kond = $_GET['kond'];
@@ -10,10 +10,61 @@ $q= "SELECT * from member_temp where member_temp_user_id='$userid' ORDER BY memb
 $r=mysqli_query($con, $q);
 $d=mysqli_fetch_assoc($r);
 
-if ($kond=='home' || $kond=='') { 
+if ($kond=='home') { 
+    ?>
+        <div class="row p-3 row-jumlah justify-content-md-center">
+            <div class="col-md-6 mt-5">
+                <h3 class="text-center mb-5">Pendaftaran Pasien</h3>
+                <form method="post" class="form-member">
+                    <div class="md-form mb-3">
+                        <select class="mdb-select md-form" id="defaultForm-member" name="ip-member" searchable="Search here..">
+                            <option value="" disabled selected>Pilih Member</option>
+                            <?php
+                                $sql="SELECT * from member ORDER BY member_id ASC";
+                                $result=mysqli_query($con,$sql);
+                                while ($data1=mysqli_fetch_array($result,MYSQLI_ASSOC)) {
+                                    echo "<option value='$data1[member_id]'>$data1[member_nama] - $data1[member_alamat] - $data1[member_hp]</option>";
+                                }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="md-form mb-3">
+                        <select class="mdb-select md-form" id="defaultForm-dokter" name="ip-dokter" searchable="Search here..">
+                            <option value="" disabled selected>Pilih Dokter</option>
+                            <?php
+                                $sql="SELECT * from users, roles WHERE roles_id=role and roles_name='dokter' ORDER BY id ASC";
+                                $result=mysqli_query($con,$sql);
+                                while ($data1=mysqli_fetch_array($result,MYSQLI_ASSOC)) {
+                                    echo "<option value='$data1[id]'>$data1[name]</option>";
+                                }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="md-form">
+                        <textarea id="defaultForm-keterangan" class="md-textarea form-control" rows="3" name="keterangan"></textarea>
+                        <label for="keterangan">Keterangan</label>
+                    </div>
+                    <button class="btn btn-primary daftar float-right">Daftar</button>
+                </form>
+                <div class="clear"></div>
+                <div class="col-md-12 text-center mt-5">
+                    <button type="button" class="btn btn-default waves-effect mr-2" id="ceknota"><i class="fas fa-clipboard-check mr-2"></i>Cek Nota</button>
+                    <button type="button" class="btn btn-default waves-effect mr-2" id="transaksi"><i class="fas fa-cash-register mr-2"></i>Transaksi</button>
+                    <!--<button type="button" class="btn btn-default waves-effect mr-2" id="tutupkasir"><i class="fas fa-cash-register mr-2"></i>Tutup Kasir</button>-->
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('.mdb-select').materialSelect();
+            });
+        </script>
+	
+<?php } elseif ($kond=='transaksi' || $kond=='') { 
     if ($d==null) { ?>
         <div class="row p-3 row-jumlah justify-content-md-center">
             <div class="col-md-6 mt-5">
+
                 <h3 class="text-center mb-5">Pilih Member</h3>
                 <form method="post" class="form-member">
                     <div class="md-form mb-5">
@@ -23,7 +74,7 @@ if ($kond=='home' || $kond=='') {
                                 $sql="SELECT * from member ORDER BY member_id ASC";
                                 $result=mysqli_query($con,$sql);
                                 while ($data1=mysqli_fetch_array($result,MYSQLI_ASSOC)) {
-                                    echo "<option value='$data1[member_id]'>$data1[member_nama] - $data1[member_no] - $data1[member_rm]</option>";
+                                    echo "<option value='$data1[member_id]'>$data1[member_nama] - $data1[member_hp] - $data1[member_alamat]</option>";
                                 }
                             ?>
                         </select>
@@ -37,6 +88,18 @@ if ($kond=='home' || $kond=='') {
                             <option value="" disabled selected>Pilih Therapist</option>
                             <?php
                                 $sql="SELECT * from users, roles WHERE roles_id=role and roles_name='therapist' ORDER BY id ASC";
+                                $result=mysqli_query($con,$sql);
+                                while ($data1=mysqli_fetch_array($result,MYSQLI_ASSOC)) {
+                                    echo "<option value='$data1[id]'>$data1[name]</option>";
+                                }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="md-form mb-3">
+                        <select class="mdb-select md-form" id="defaultForm-dokter" name="ip-dokter" searchable="Search here..">
+                            <option value="" disabled selected>Pilih Dokter</option>
+                            <?php
+                                $sql="SELECT * from users, roles WHERE roles_id=role and roles_name='dokter' ORDER BY id ASC";
                                 $result=mysqli_query($con,$sql);
                                 while ($data1=mysqli_fetch_array($result,MYSQLI_ASSOC)) {
                                     echo "<option value='$data1[id]'>$data1[name]</option>";
@@ -199,7 +262,7 @@ if ($kond=='home' || $kond=='') {
 
         </div>
     <?php } ?>
-	
+    
 <?php } elseif ($kond=='search') { ?>
 	
     <div class="row p-3">
@@ -305,6 +368,10 @@ if ($kond=='home' || $kond=='') {
 					<textarea id="keterangan" class="md-textarea form-control" rows="3" name="keterangan"></textarea>
 					<label for="keterangan">Request</label>
 				</div>
+                <div class="md-form mt-4">
+                    <input type="text" id="diskon" class="form-control" name="diskon" >
+                    <label for="diskon">Diskon (%)</label>
+                </div>
                 <div class="md-form mt-4">
                     <input type="text" id="hargamanual" class="form-control" name="hargamanual" >
                     <label for="hargamanual">Harga Manual</label>
@@ -447,6 +514,7 @@ if ($kond=='home' || $kond=='') {
                     </div>
                     <button class="btn btn-primary prosestutupkasir float-right">Proses</button>
                     <button class="btn btn-danger kembali float-right">Kembali</button>
+                    <button class="btn btn-warning laporanharian float-right">Print</button>
                 </form>
             </div>
         </div>
@@ -466,13 +534,14 @@ if ($kond=='home' || $kond=='') {
 <?php } ?>
 
 
-<?php if ($kond=='home' || $kond=='search' || $kond=='item' || $kond=='' ) { ?>
+<?php if ($kond=='home' || $kond=='search' || $kond=='item' || $kond==''  || $kond=='transaksi' ) { ?>
 
 <script type="text/javascript">
     $('.pilihmember').on('click',function(e){
         e.preventDefault();
         var idmember = $('#defaultForm-member').val();
         var idtherapist = $('#defaultForm-therapist').val();
+        var iddokter = $('#defaultForm-dokter').val();
         var nama = $('#defaultForm-nama').val();
 
 
@@ -483,9 +552,33 @@ if ($kond=='home' || $kond=='') {
             data:{
                 idmember:idmember,
                 idtherapist:idtherapist,
+                iddokter:iddokter,
                 nama:nama
             },
             success:function(data){
+                window.location.reload();
+                $('.container__load').load('components/content/transaksi.content.php?kond=transaksi');
+            }
+        }); 
+    });
+    $('.daftar').on('click',function(e){
+        e.preventDefault();
+        var idmember = $('#defaultForm-member').val();
+        var iddokter = $('#defaultForm-dokter').val();
+        var keterangan = $('#defaultForm-keterangan').val();
+
+
+        $.ajax({
+            type:'POST',
+            url: "controllers/transaksi.ctrl.php?ket=pendaftaran",
+            dataType: "json",
+            data:{
+                idmember:idmember,
+                iddokter:iddokter,
+                keterangan:keterangan
+            },
+            success:function(data){
+                console.log(data);
                 window.location.reload();
                 $('.container__load').load('components/content/transaksi.content.php?kond=home');
             }
@@ -517,6 +610,7 @@ if ($kond=='home' || $kond=='') {
                         var jumlah = 1;
                         var keterangan = '';
                         var hargamanual = 0;
+                        var diskon = 0;
                         if ($('#defaultForm-ordertype').val()=='online') {
                             var pajakjml = $('#ip-pajakonline').val();  
                         } else {
@@ -532,7 +626,8 @@ if ($kond=='home' || $kond=='') {
                                 barang_id:barang_id,
                                 jumlah:jumlah,
                                 keterangan:keterangan,
-                                hargamanual:hargamanual
+                                hargamanual:hargamanual,
+                                diskon:diskon
                             },
                             success:function(data){
                                 $('#carimenu').val('');
@@ -557,13 +652,14 @@ if ($kond=='home' || $kond=='') {
                                     var diskon = '';
                                     var ketdiskon = '';
                                     if (data.item.transaksi_detail_temp_diskon!=0) {
-                                        diskon = '<tr class="fadeInLeft animated diskon"><td></td><td>Diskon</td><td></td><td><span class="text_total">Rp. '+formatRupiah((data.item.transaksi_detail_temp_jumlah*data.item.transaksi_detail_temp_diskon).toString())+'</span></td></tr>';
+                                        diskon = '<tr class="fadeInLeft animated diskon"><td></td><td>Diskon</td><td></td><td><span class="text_total">- Rp. '+formatRupiah((data.item.transaksi_detail_temp_jumlah*data.item.transaksi_detail_temp_diskon).toString())+'</span></td></tr>';
                                         ketdiskon = 'itemdiskon';
                                     } else {
                                         diskon = '';
                                         ketdiskon = '';
                                     }
-                                    var content = '<tr class="'+ketdiskon+' fadeInLeft animated"><td><button type="button" class="btn btn-dark-info waves-effect btn orange-text m-0 p-0 btn-remove" data-id="'+data.item.transaksi_detail_temp_id+'"><i class="fas fa-times"></i></button></td><td>'+data.item.barang_nama+'<br><span>'+data.item.transaksi_detail_temp_keterangan+'</span></td><td><button type="button" class="btn btn-dark-info waves-effect btn btn-outline-white mr-2 mt-0 ml-0 mb-0 p-1 btn-plusminus" data-ket="minus" data-id="'+data.item.transaksi_detail_temp_id+'" data-idbarang="'+data.item.transaksi_detail_temp_barang_id+'" data-jumlah="'+data.item.transaksi_detail_temp_jumlah+'"><i class="fas fa-minus"></i></button><span class="text_jumlah">'+data.item.transaksi_detail_temp_jumlah+'</span><button type="button" class="btn btn-dark-info waves-effect btn-outline-white mr-0 mt-0 ml-2 mb-0 p-1 btn-plusminus" data-ket="plus" data-id="'+data.item.transaksi_detail_temp_id+'" data-idbarang="'+data.item.transaksi_detail_temp_barang_id+'" data-jumlah="'+data.item.transaksi_detail_temp_jumlah+'"><i class="fas fa-plus"></i></button></td><td><span class="text_total">'+formatRupiah(data.item.transaksi_detail_temp_total, 'Rp. ')+'</span></td></tr>'+diskon;
+                                    var content = '<tr class="'+ketdiskon+' fadeInLeft animated"><td><button type="button" class="btn btn-dark-info waves-effect btn orange-text m-0 p-0 btn-remove" data-id="'+data.item.transaksi_detail_temp_id+'"><i class="fas fa-times"></i></button></td><td>'+data.item.barang_nama+'<br><span>'+data.item.transaksi_detail_temp_keterangan+'</span></td><td><button type="button" class="btn btn-dark-info waves-effect btn btn-outline-white mr-2 mt-0 ml-0 mb-0 p-1 btn-plusminus" data-ket="minus" data-id="'+data.item.transaksi_detail_temp_id+'" data-idbarang="'+data.item.transaksi_detail_temp_barang_id+'" data-jumlah="'+data.item.transaksi_detail_temp_jumlah+'"><i class="fas fa-minus"></i></button><span class="text_jumlah">'+data.item.transaksi_detail_temp_jumlah+'</span><button type="button" class="btn btn-dark-info waves-effect btn-outline-white mr-0 mt-0 ml-2 mb-0 p-1 btn-plusminus" data-ket="plus" data-id="'+data.item.transaksi_detail_temp_id+'" data-idbarang="'+data.item.transaksi_detail_temp_barang_id+'" data-jumlah="'+data.item.transaksi_detail_temp_jumlah+'"><i class="fas fa-plus"></i></button></td><td><span class="text_total">'+formatRupiah((parseInt(data.item.transaksi_detail_temp_total)+(data.item.transaksi_detail_temp_jumlah*data.item.transaksi_detail_temp_diskon)).toString(), 'Rp. ')+'</span></td></tr>'+diskon;
+
                                     $('#subtotal').empty();
                                     $('#subtotal').append(formatRupiah(data.totalordertemp.toString(), 'Rp. '));
 
@@ -649,6 +745,10 @@ if ($kond=='home' || $kond=='') {
         $('.container__load').load('components/content/transaksi.content.php?kond=ceknota&nonota=');
     });
 
+    $('#transaksi').on('click',function(){
+        $('.container__load').load('components/content/transaksi.content.php?kond=transaksi');
+    });
+
     $('#tutupkasir').on('click',function(){
         $('.container__load').load('components/content/transaksi.content.php?kond=tutupkasir&omset=');
     });
@@ -658,6 +758,7 @@ if ($kond=='home' || $kond=='') {
     	var jumlah = 1;
     	var keterangan = '';
         var hargamanual = 0;
+        var diskon = 0;
     	if ($('#defaultForm-ordertype').val()=='online') {
         	var pajakjml = $('#ip-pajakonline').val();	
     	} else {
@@ -673,7 +774,8 @@ if ($kond=='home' || $kond=='') {
             	barang_id:barang_id,
             	jumlah:jumlah,
             	keterangan:keterangan,
-                hargamanual:hargamanual
+                hargamanual:hargamanual,
+                diskon:diskon
             },
             success:function(data){
 				$('#carimenu').val('');
@@ -698,13 +800,13 @@ if ($kond=='home' || $kond=='') {
                     var diskon = '';
                     var ketdiskon = '';
                     if (data.item.transaksi_detail_temp_diskon!=0) {
-                        diskon = '<tr class="fadeInLeft animated diskon"><td></td><td>Diskon</td><td></td><td><span class="text_total">Rp. '+formatRupiah((data.item.transaksi_detail_temp_jumlah*data.item.transaksi_detail_temp_diskon).toString())+'</span></td></tr>';
+                        diskon = '<tr class="fadeInLeft animated diskon"><td></td><td>Diskon</td><td></td><td><span class="text_total">- Rp. '+formatRupiah((data.item.transaksi_detail_temp_jumlah*data.item.transaksi_detail_temp_diskon).toString())+'</span></td></tr>';
                         ketdiskon = 'itemdiskon';
                     } else {
                         diskon = '';
                         ketdiskon = '';
                     }
-		            var content = '<tr class="'+ketdiskon+' fadeInLeft animated"><td><button type="button" class="btn btn-dark-info waves-effect btn orange-text m-0 p-0 btn-remove" data-id="'+data.item.transaksi_detail_temp_id+'"><i class="fas fa-times"></i></button></td><td>'+data.item.barang_nama+'<br><span>'+data.item.transaksi_detail_temp_keterangan+'</span></td><td><button type="button" class="btn btn-dark-info waves-effect btn btn-outline-white mr-2 mt-0 ml-0 mb-0 p-1 btn-plusminus" data-ket="minus" data-id="'+data.item.transaksi_detail_temp_id+'" data-idbarang="'+data.item.transaksi_detail_temp_barang_id+'" data-jumlah="'+data.item.transaksi_detail_temp_jumlah+'"><i class="fas fa-minus"></i></button><span class="text_jumlah">'+data.item.transaksi_detail_temp_jumlah+'</span><button type="button" class="btn btn-dark-info waves-effect btn-outline-white mr-0 mt-0 ml-2 mb-0 p-1 btn-plusminus" data-ket="plus" data-id="'+data.item.transaksi_detail_temp_id+'" data-idbarang="'+data.item.transaksi_detail_temp_barang_id+'" data-jumlah="'+data.item.transaksi_detail_temp_jumlah+'"><i class="fas fa-plus"></i></button></td><td><span class="text_total">'+formatRupiah(data.item.transaksi_detail_temp_total, 'Rp. ')+'</span></td></tr>'+diskon;
+		            var content = '<tr class="'+ketdiskon+' fadeInLeft animated"><td><button type="button" class="btn btn-dark-info waves-effect btn orange-text m-0 p-0 btn-remove" data-id="'+data.item.transaksi_detail_temp_id+'"><i class="fas fa-times"></i></button></td><td>'+data.item.barang_nama+'<br><span>'+data.item.transaksi_detail_temp_keterangan+'</span></td><td><button type="button" class="btn btn-dark-info waves-effect btn btn-outline-white mr-2 mt-0 ml-0 mb-0 p-1 btn-plusminus" data-ket="minus" data-id="'+data.item.transaksi_detail_temp_id+'" data-idbarang="'+data.item.transaksi_detail_temp_barang_id+'" data-jumlah="'+data.item.transaksi_detail_temp_jumlah+'"><i class="fas fa-minus"></i></button><span class="text_jumlah">'+data.item.transaksi_detail_temp_jumlah+'</span><button type="button" class="btn btn-dark-info waves-effect btn-outline-white mr-0 mt-0 ml-2 mb-0 p-1 btn-plusminus" data-ket="plus" data-id="'+data.item.transaksi_detail_temp_id+'" data-idbarang="'+data.item.transaksi_detail_temp_barang_id+'" data-jumlah="'+data.item.transaksi_detail_temp_jumlah+'"><i class="fas fa-plus"></i></button></td><td><span class="text_total">'+formatRupiah((parseInt(data.item.transaksi_detail_temp_total)+(data.item.transaksi_detail_temp_jumlah*data.item.transaksi_detail_temp_diskon)).toString(), 'Rp. ')+'</span></td></tr>'+diskon;
 		        	$('#subtotal').empty();
 		            $('#subtotal').append(formatRupiah(data.totalordertemp.toString(), 'Rp. '));
 
@@ -861,6 +963,22 @@ if ($kond=='home' || $kond=='') {
 
         });
 
+        $('.laporanharian').on('click',function(e){
+            e.preventDefault();
+
+            windowList = new Array('../print/omset.print.php');
+            i = 0;
+            windowName = "window";
+            windowInterval = window.setInterval(function(){
+                window.open(windowList[i],windowName+i,'toolbar=0,scrollbars=1,location=0,statusbar=0,menubar=0,resizable=0,titlebar=no');
+                i++;
+                if(i==windowList.length){
+                    window.clearInterval(windowInterval);
+                }
+            },1000);
+
+        });
+
         $('#btn-printulang').on('click',function(e){
             var idnonota = $('#ip-nota').val();
             e.preventDefault();
@@ -921,14 +1039,14 @@ if ($kond=='home' || $kond=='') {
                         var diskon = '';
                         var ketdiskon = '';
                         if (data.item.transaksi_detail_temp_diskon!=0) {
-                            diskon = '<tr class="fadeInLeft animated diskon"><td></td><td>Diskon</td><td></td><td><span class="text_total">Rp. '+formatRupiah((data.item.transaksi_detail_temp_jumlah*data.item.transaksi_detail_temp_diskon).toString())+'</span></td></tr>';
+                            diskon = '<tr class="fadeInLeft animated diskon"><td></td><td>Diskon</td><td></td><td><span class="text_total">- Rp. '+formatRupiah((data.item.transaksi_detail_temp_jumlah*data.item.transaksi_detail_temp_diskon).toString())+'</span></td></tr>';
                             ketdiskon = 'itemdiskon';
                         } else {
                             diskon = '';
                             ketdiskon = '';
                         }
 
-			            var content = '<tr class="'+ketdiskon+' fadeInLeft animated"><td><button type="button" class="btn btn-dark-info waves-effect btn orange-text m-0 p-0 btn-remove" data-id="'+data.item.transaksi_detail_temp_id+'"><i class="fas fa-times"></i></button></td><td>'+data.item.barang_nama+'<br><span>'+data.item.transaksi_detail_temp_keterangan+'</span></td><td><button type="button" class="btn btn-dark-info waves-effect btn btn-outline-white mr-2 mt-0 ml-0 mb-0 p-1 btn-plusminus" data-ket="minus" data-id="'+data.item.transaksi_detail_temp_id+'" data-idbarang="'+data.item.transaksi_detail_temp_barang_id+'" data-jumlah="'+data.item.transaksi_detail_temp_jumlah+'"><i class="fas fa-minus"></i></button><span class="text_jumlah">'+data.item.transaksi_detail_temp_jumlah+'</span><button type="button" class="btn btn-dark-info waves-effect btn-outline-white mr-0 mt-0 ml-2 mb-0 p-1 btn-plusminus" data-ket="plus" data-id="'+data.item.transaksi_detail_temp_id+'" data-idbarang="'+data.item.transaksi_detail_temp_barang_id+'" data-jumlah="'+data.item.transaksi_detail_temp_jumlah+'"><i class="fas fa-plus"></i></button></td><td><span class="text_total">'+formatRupiah(data.item.transaksi_detail_temp_total, 'Rp. ')+'</span></td></tr>'+diskon;
+			            var content = '<tr class="'+ketdiskon+' fadeInLeft animated"><td><button type="button" class="btn btn-dark-info waves-effect btn orange-text m-0 p-0 btn-remove" data-id="'+data.item.transaksi_detail_temp_id+'"><i class="fas fa-times"></i></button></td><td>'+data.item.barang_nama+'<br><span>'+data.item.transaksi_detail_temp_keterangan+'</span></td><td><button type="button" class="btn btn-dark-info waves-effect btn btn-outline-white mr-2 mt-0 ml-0 mb-0 p-1 btn-plusminus" data-ket="minus" data-id="'+data.item.transaksi_detail_temp_id+'" data-idbarang="'+data.item.transaksi_detail_temp_barang_id+'" data-jumlah="'+data.item.transaksi_detail_temp_jumlah+'"><i class="fas fa-minus"></i></button><span class="text_jumlah">'+data.item.transaksi_detail_temp_jumlah+'</span><button type="button" class="btn btn-dark-info waves-effect btn-outline-white mr-0 mt-0 ml-2 mb-0 p-1 btn-plusminus" data-ket="plus" data-id="'+data.item.transaksi_detail_temp_id+'" data-idbarang="'+data.item.transaksi_detail_temp_barang_id+'" data-jumlah="'+data.item.transaksi_detail_temp_jumlah+'"><i class="fas fa-plus"></i></button></td><td><span class="text_total">'+formatRupiah((parseInt(data.item.transaksi_detail_temp_total)+(data.item.transaksi_detail_temp_jumlah*data.item.transaksi_detail_temp_diskon)).toString(), 'Rp. ')+'</span></td></tr>'+diskon;
 
 			        	$('#subtotal').empty();
 			            $('#subtotal').append(formatRupiah(data.totalordertemp.toString(), 'Rp. '));
@@ -995,7 +1113,7 @@ if ($kond=='home' || $kond=='') {
 <?php
 }
 
-if ($kond=='home') { ?>
+if ($kond=='transaksi') { ?>
     <script type="text/javascript">
 		$.ajax({
 	        type:'POST',
@@ -1016,17 +1134,18 @@ if ($kond=='home') { ?>
 
                 var diskon = '';
                 var ketdiskon = '';
+
 				for (var i in data) {
 
                     if (data[i].transaksi_detail_temp_diskon!=0) {
-                        diskon = '<tr class="diskon"><td></td><td>Diskon</td><td></td><td><span class="text_total">Rp. '+formatRupiah((data[i].transaksi_detail_temp_jumlah*data[i].transaksi_detail_temp_diskon).toString())+'</span></td></tr>';
+                        diskon = '<tr class="diskon"><td></td><td>Diskon</td><td></td><td><span class="text_total">- Rp. '+formatRupiah((data[i].transaksi_detail_temp_jumlah*data[i].transaksi_detail_temp_diskon).toString())+'</span></td></tr>';
                         ketdiskon = 'itemdiskon';
                     } else {
                         diskon = '';
                         ketdiskon = '';
                     }
 
-				    content += '<tr class="'+ketdiskon+'"><td><button type="button" class="btn btn-dark-info waves-effect btn orange-text m-0 p-0 btn-remove" data-id="'+data[i].transaksi_detail_temp_id+'"><i class="fas fa-times"></i></button></td><td>'+data[i].barang_nama+'<br><span>'+data[i].transaksi_detail_temp_keterangan+'</span></td><td><button type="button" class="btn btn-dark-info waves-effect btn btn-outline-white mr-2 mt-0 ml-0 mb-0 p-1 btn-plusminus"  data-ket="minus" data-id="'+data[i].transaksi_detail_temp_id+'" data-idbarang="'+data[i].transaksi_detail_temp_barang_id+'" data-jumlah="'+data[i].transaksi_detail_temp_jumlah+'"><i class="fas fa-minus"></i></button><span class="text_jumlah">'+data[i].transaksi_detail_temp_jumlah+'</span><button type="button" class="btn btn-dark-info waves-effect btn-outline-white mr-0 mt-0 ml-2 mb-0 p-1 btn-plusminus" data-ket="plus" data-id="'+data[i].transaksi_detail_temp_id+'" data-idbarang="'+data[i].transaksi_detail_temp_barang_id+'" data-jumlah="'+data[i].transaksi_detail_temp_jumlah+'"><i class="fas fa-plus"></i></button></td><td><span class="text_total">'+formatRupiah(data[i].transaksi_detail_temp_total, 'Rp. ')+'</span></td></tr>'+diskon;
+				    content += '<tr class="'+ketdiskon+'"><td><button type="button" class="btn btn-dark-info waves-effect btn orange-text m-0 p-0 btn-remove" data-id="'+data[i].transaksi_detail_temp_id+'"><i class="fas fa-times"></i></button></td><td>'+data[i].barang_nama+'<br><span>'+data[i].transaksi_detail_temp_keterangan+'</span></td><td><button type="button" class="btn btn-dark-info waves-effect btn btn-outline-white mr-2 mt-0 ml-0 mb-0 p-1 btn-plusminus"  data-ket="minus" data-id="'+data[i].transaksi_detail_temp_id+'" data-idbarang="'+data[i].transaksi_detail_temp_barang_id+'" data-jumlah="'+data[i].transaksi_detail_temp_jumlah+'"><i class="fas fa-minus"></i></button><span class="text_jumlah">'+data[i].transaksi_detail_temp_jumlah+'</span><button type="button" class="btn btn-dark-info waves-effect btn-outline-white mr-0 mt-0 ml-2 mb-0 p-1 btn-plusminus" data-ket="plus" data-id="'+data[i].transaksi_detail_temp_id+'" data-idbarang="'+data[i].transaksi_detail_temp_barang_id+'" data-jumlah="'+data[i].transaksi_detail_temp_jumlah+'"><i class="fas fa-plus"></i></button></td><td><span class="text_total">'+formatRupiah((parseInt(data[i].transaksi_detail_temp_total)+(data[i].transaksi_detail_temp_jumlah*data[i].transaksi_detail_temp_diskon)).toString(), 'Rp. ')+'</span></td></tr>'+diskon;
 				    subtotal += parseInt(data[i].transaksi_detail_temp_total);
 				}
 				var tax = parseInt(pajakjml)*subtotal*0.1;
@@ -1052,6 +1171,7 @@ if ($kond=='home') { ?>
 				var jmldiskon = $("#defaultForm-jumlahdiskon").val();
 
 				var total = tax+subtotal+taxservice-jmldiskon;
+                console.log("Rp "+total)
 				$('#total').append(formatRupiah(total.toString(), 'Rp. '));
 				$('#listitem table').append(content);
 
@@ -1087,18 +1207,15 @@ if ($kond=='home') { ?>
                 $('#listmember table').empty();
                 var nama = ''; 
                 if (data!='') {
-                    if (data[0].member_temp_member_id==0) {
-                        nama = data[0].member_temp_nama;
-                    } else {
-                        nama = data[0].member_nama;
-                    }
-                    $('#listmember table').append('<tr><td><h6>Nama Member: '+nama+'</h6></td><td class="text-right"><h6>Alamat Member: '+data[0].member_alamat+'</h6></td></tr>'+
-                        '<tr><td><h6>Nama Therapist: '+data[0].name+'</h6></td><td class="text-right"><h6>Nama Kasir: '+$('#defaultForm-user').val()+'</h6></td></tr>');
+                    
+                    $('#listmember table').append('<tr><td><h6>Nama Member: '+data[0].nama+'</h6></td><td class="text-right"><h6>Alamat Member: '+data[0].member_alamat+'</h6></td></tr>'+
+                        '<tr><td><h6>Nama Therapist: '+data[0].therapist+'</h6></td><td class="text-right"><h6>Nama dokter: '+data[0].dokter+'</h6></td></tr>');
                     $('#bayar').removeAttr("disabled");
                 }
             }
         });
 
+        
 	</script>
 
 <?php } ?>
@@ -1155,7 +1272,7 @@ if ($kond=='home') { ?>
 				$('#total').append(formatRupiah(total.toString(), 'Rp. '));
                 */
 
-				$('.container__load').load('components/content/transaksi.content.php?kond=home');
+				$('.container__load').load('components/content/transaksi.content.php?kond=transaksi');
             }
         });
 	}
@@ -1197,7 +1314,7 @@ if ($kond=='home') { ?>
                           }
                     });
                 } else {
-                    $('.container__load').load('components/content/transaksi.content.php?kond=home');
+                    $('.container__load').load('components/content/transaksi.content.php?kond=transaksi');
                 }
 
             	/*

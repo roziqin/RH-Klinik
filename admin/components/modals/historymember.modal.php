@@ -32,6 +32,12 @@
           <div class="col-md-12 col-md-offset-0">
             <p class="text-alamat"></p>
           </div>
+          <div class="col-md-6 col-md-offset-0">
+            <p class="text-dokter"></p>
+          </div>
+          <div class="col-md-12 col-md-offset-0">
+            <p class="text-therapist"></p>
+          </div>
         </div>
         <table id="table-historymember" class="table table-striped table-bordered fadeInLeft slow animated" style="width:100%">
             <thead>

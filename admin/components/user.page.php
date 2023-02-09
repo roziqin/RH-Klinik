@@ -1,11 +1,8 @@
 
-	<div class="container-fluid p-0 fadeIn animated position-relative" style="z-index: 1;">
+	<div class="container-fluid p-0 fadeIn animated position-relative" >
 		<div class="row header-content pt-3 pb-3 info-color text-white ">
 			<div class="col-md-9">
 				<h2>Users</h2>
-			</div>
-			<div class="col-md-3">
-				<?php include 'partials/notifications.php'; ?>
 			</div>
 		</div>
 	</div>

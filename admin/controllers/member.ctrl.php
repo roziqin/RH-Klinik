@@ -7,12 +7,12 @@ $tgl=date('Y-m-j');
 $array_datas = array();
 	
 if($_GET['ket']=='submit-member'){
-	$rm = $_POST['ip-rm'];
+	$rm = 0;
 
 
 	$nama = $_POST['ip-nama'];
 	$a = substr($nama,0,1);
-
+/*
 	$qn= "SELECT COUNT( member_id ) AS jml FROM member where member_no LIKE '$a%'";
     $rn=mysqli_query($con,$qn);
     $dn=mysqli_fetch_assoc($rn);
@@ -22,6 +22,7 @@ if($_GET['ket']=='submit-member'){
     	$jml = $dn['jml']+1;
     	$nomember = $a."".$jml;
     }
+    */
 
 	$usia = $_POST['ip-usia'];
 	$alamat = $_POST['ip-alamat'];
@@ -30,7 +31,7 @@ if($_GET['ket']=='submit-member'){
 	$hp = $_POST['ip-hp'];
 	$gender = $_POST['ip-gender'];
 
-	$sql = "INSERT into member(member_no,member_rm,member_nama,member_alamat,member_tgl_lahir,member_usia,member_hp,member_gender,member_tanggal)values('$nomember','$rm','$nama','$alamat','$tgllahir','$usia','$hp','$gender','$tgl1')";
+	$sql = "INSERT into member(member_nama,member_alamat,member_tgl_lahir,member_usia,member_hp,member_gender)values('$nama','$alamat','$tgllahir','$usia','$hp','$gender')";
 
 	mysqli_query($con,$sql);
     
@@ -40,10 +41,10 @@ if($_GET['ket']=='submit-member'){
 	$id = $_POST['ip-id'];
 	$nama = $_POST['ip-nama'];
 	$a = substr($nama,0,1);
-	$no = $_POST['ip-no'];
+	//$no = $_POST['ip-no'];
 
-	$rm = $_POST['ip-rm'];
-
+	//$rm = $_POST['ip-rm'];
+/*
 	
 	$sql1="SELECT * from member where member_id='$id'";
 	$query1=mysqli_query($con,$sql1);
@@ -64,6 +65,7 @@ if($_GET['ket']=='submit-member'){
 	} else {
 		$nomember = $no;
 	}
+	*/
 
 	$usia = $_POST['ip-usia'];
 	$alamat = $_POST['ip-alamat'];
@@ -71,7 +73,7 @@ if($_GET['ket']=='submit-member'){
 	$hp = $_POST['ip-hp'];
 	$gender = $_POST['ip-gender'];
 
-	$sql="UPDATE member set member_no='$nomember', member_rm='$rm', member_nama='$nama', member_alamat='$alamat', member_tgl_lahir='$tgllahir',member_usia='$usia' ,member_hp='$hp', member_gender='$gender' where member_id='$id'";
+	$sql="UPDATE member set member_nama='$nama', member_alamat='$alamat', member_tgl_lahir='$tgllahir',member_usia='$usia' ,member_hp='$hp', member_gender='$gender' where member_id='$id'";
 	mysqli_query($con,$sql);
 	
 } elseif($_GET['ket']=='remove-member'){

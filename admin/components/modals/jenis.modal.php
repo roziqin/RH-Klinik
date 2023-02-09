@@ -16,6 +16,13 @@
               <input type="text" id="defaultForm-nama" class="form-control validate mb-3" name="ip-nama">
               <label for="defaultForm-nama">Nama jenis</label>
             </div>
+            <div class="md-form mb-0">
+                <select class="mdb-select md-form" id="defaultForm-status" name="ip-status">
+                    <option value="" disabled selected>Pilih Status</option>
+                    <option value="0">Skincare</option>
+                    <option value="1">Apotek</option>
+                </select>
+            </div>
         </div>
         <div class="modal-footer d-flex justify-content-center">
           <button class="btn btn-primary" id="submit-jenis" data-dismiss="modal" aria-label="Close">Proses</button>

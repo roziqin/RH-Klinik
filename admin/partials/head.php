@@ -10,3 +10,4 @@
 <link rel="stylesheet" type="text/css" href="../assets/css/addons/datatables.min.css">
 <link rel="stylesheet" type="text/css" href="../assets/css/style.css?abc">
 <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap-datepicker3.css">
+<link rel="stylesheet" type="text/css" href="../assets/js/select2/select2.min.css">

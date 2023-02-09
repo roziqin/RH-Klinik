@@ -1,4 +1,4 @@
-<?php $con = mysqli_connect("localhost","root","","salon_kecantikan"); ?>
+<?php $con = mysqli_connect("localhost","root","","klinik_new"); ?>
 <!-------------- Modal tambah kategori -------------->
 
 <div class="modal fade" id="modaltambahkategori" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

@@ -12,11 +12,11 @@ $aa = "SELECT * from users where id='$aid'";
   $cc = mysqli_fetch_assoc($bb);
   $id=$cc['name'];
   $iduser=$cc['id'];
-      
+      echo $tgl;
   $dd = mysqli_query($con,"SELECT * FROM validasi where validasi_user_id='$iduser' and validasi_tanggal='$tgl' order by validasi_id DESC LIMIT 1");
   $datadd=mysqli_fetch_assoc($dd);
   $fisik = $datadd['validasi_jumlah'];
-  echo mysql_error();
+  //echo mysql_error();
 
   $query=mysqli_query($con,"SELECT count(transaksi_id) as jumlah, sum(transaksi_total) as total, sum(transaksi_diskon) as diskon from transaksi where transaksi_tanggal='$tgl' and transaksi_user = '$iduser' group by transaksi_tanggal ");
       $datatea=mysqli_fetch_assoc($query);

@@ -15,7 +15,11 @@
           <button type="button" class="btn btn-white waves-effect mr-2 text-info paytype" data-id="debet" id="debet"><i class="far fa-credit-card"></i>Debet</button>
         </div>
         <input type="hidden" id="defaultForm-paytype" name="ip-paytype" value="cash">
+        <input type="hidden" id="defaultForm-statusmodal" name="ip-status">
         <input type="hidden" id="defaultForm-totalmodal" name="ip-total">
+        <div class="md-form mb-0">
+          <input placeholder="Tanggal Kontrol" type="text" id="defaultForm-tgl-kontrol" class="form-control datepicker" name="ip-tgl-kontrol">
+        </div>
         <div class="md-form mb-0">
           <input type="text" id="price" class="form-control validate mb-1" name="ip-bayar">
           <label for="price">Bayar</label>
@@ -43,6 +47,7 @@
         e.preventDefault();
         var data = new FormData();
         data.append('ip-total', $("#defaultForm-total").val());
+        data.append('ip-kontrol', $("#defaultForm-tgl-kontrol").val());
         data.append('ip-paytype', $("#defaultForm-paytype").val());
         data.append('ip-jenisdiskon', $("#defaultForm-jenisdiskon").val());
         data.append('ip-jumlahdiskon', $("#defaultForm-jumlahdiskon").val());
@@ -81,7 +86,7 @@
 
           $.ajax({
             type: 'POST',
-            url: "controllers/transaksi.ctrl.php?ket=prosestransaksi",
+            url: "controllers/transaksi.ctrl.php?ket=prosesbayarsekarang",
             data: data,
             cache: false,
             processData: false,

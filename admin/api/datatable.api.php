@@ -9,9 +9,15 @@ $bln=date('m');
 
 if ($_GET['ket']=='produk') {
 
-	$sql = mysqli_query($con, "SELECT barang_id FROM barang, kategori where barang_kategori=kategori_id"); // Query untuk menghitung seluruh data siswa
+	$sql = mysqli_query($con, "SELECT barang_id FROM barang, kategori, jenis where barang_kategori=kategori_id and kategori_jenis=jenis_id and jenis_status=0"); // Query untuk menghitung seluruh data siswa
 	$sql_count = mysqli_num_rows($sql); // Hitung data yg ada pada query $sql
-	$query = "SELECT * FROM barang, kategori where barang_kategori=kategori_id and (barang_nama LIKE '%".$search."%' OR kategori_nama LIKE '%".$search."%')";
+	$query = "SELECT * FROM barang, kategori, jenis where barang_kategori=kategori_id and kategori_jenis=jenis_id and jenis_status=0 and (barang_nama LIKE '%".$search."%' OR kategori_nama LIKE '%".$search."%')";
+
+}if ($_GET['ket']=='produkapotek') {
+
+	$sql = mysqli_query($con, "SELECT barang_id FROM barang, kategori, jenis where barang_kategori=kategori_id and kategori_jenis=jenis_id and jenis_status=1"); // Query untuk menghitung seluruh data siswa
+	$sql_count = mysqli_num_rows($sql); // Hitung data yg ada pada query $sql
+	$query = "SELECT * FROM barang, kategori, jenis where barang_kategori=kategori_id and kategori_jenis=jenis_id and jenis_status=1 and (barang_nama LIKE '%".$search."%' OR kategori_nama LIKE '%".$search."%')";
 
 } elseif ($_GET['ket']=='kategori') {
 
@@ -37,11 +43,23 @@ if ($_GET['ket']=='produk') {
 	$sql_count = mysqli_num_rows($sql); // Hitung data yg ada pada query $sql
 	$query = "SELECT * FROM member where (member_nama LIKE '%".$search."%')";
 	
+} elseif ($_GET['ket']=='listbayar') {
+
+	$sql = mysqli_query($con, "SELECT transaksi_id FROM transaksi, member WHERE transaksi_member=member_id and transaksi_ket='hold'"); // Query untuk menghitung seluruh data siswa
+	$sql_count = mysqli_num_rows($sql); // Hitung data yg ada pada query $sql
+	$query = "SELECT * FROM transaksi, member where transaksi_member=member_id and transaksi_ket='hold' and (member_nama LIKE '%".$search."%')";
+	
 } elseif ($_GET['ket']=='memberultah') {
 
 	$sql = mysqli_query($con, "SELECT member_id FROM member WHERE MONTH(member_tgl_lahir) = '".$bln."' "); // Query untuk menghitung seluruh data siswa
 	$sql_count = mysqli_num_rows($sql); // Hitung data yg ada pada query $sql
 	$query = "SELECT * FROM member where MONTH(member_tgl_lahir) = '".$bln."' and (member_nama LIKE '%".$search."%' or member_tanggal LIKE '%".$search."%')";
+	
+} elseif ($_GET['ket']=='memberkontrol') {
+
+	$sql = mysqli_query($con, "SELECT transaksi_id FROM transaksi, member WHERE transaksi_member=member_id AND transaksi_tanggal_kontrol BETWEEN '$tgl21' AND '$tgl22' "); // Query untuk menghitung seluruh data siswa
+	$sql_count = mysqli_num_rows($sql); // Hitung data yg ada pada query $sql
+	$query = "SELECT * FROM transaksi,member where transaksi_member=member_id AND transaksi_tanggal_kontrol BETWEEN '$tgl21' AND '$tgl22'";
 	
 } elseif ($_GET['ket']=='stok') {
 

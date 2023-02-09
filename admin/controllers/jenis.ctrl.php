@@ -8,9 +8,10 @@ $tgl=date('Y-m-j');
 if($_GET['ket']=='submit-jenis'){
 
 	$nama = $_POST['ip-nama'];
+	$status = $_POST['ip-status'];
 	$slug = slugify($nama);
 
-	$sql = "INSERT into jenis(jenis_nama,jenis_slug)values('$nama','$slug')";
+	$sql = "INSERT into jenis(jenis_nama,jenis_slug,jenis_status)values('$nama','$slug','$status')";
 
 	mysqli_query($con,$sql);
 	
@@ -19,9 +20,10 @@ if($_GET['ket']=='submit-jenis'){
 
 	$id = $_POST['ip-id'];
 	$nama = $_POST['ip-nama'];
+	$status = $_POST['ip-status'];
 	$slug = slugify($nama);
 
-	$sql="UPDATE jenis set jenis_nama='$nama', jenis_slug='$slug' where jenis_id='$id'";
+	$sql="UPDATE jenis set jenis_nama='$nama', jenis_slug='$slug', jenis_status='$status' where jenis_id='$id'";
 	mysqli_query($con,$sql);
 	
 } elseif($_GET['ket']=='remove-jenis'){

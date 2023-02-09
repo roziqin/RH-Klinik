@@ -3,9 +3,21 @@
 
         include "components/dashboard.page.php";
 
+    } elseif ($_GET['menu']=='pendaftaran') {
+
+        include "components/pendaftaran.page.php";
+
     } elseif ($_GET['menu']=='transaksi') {
 
         include "components/transaksi.page.php";
+
+    } elseif ($_GET['menu']=='pembayaran') {
+
+        include "components/pembayaran.page.php";
+
+    } elseif ($_GET['menu']=='apotek') {
+
+        include "components/apotek.page.php";
 
     } elseif ($_GET['menu']=='pembelian') {
 

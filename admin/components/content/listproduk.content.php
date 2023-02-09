@@ -8,7 +8,6 @@
                 <th>kategori</th>
                 <th>stok</th>
                 <th>batas stok</th>
-                <th>harga beli</th>
                 <th>harga jual</th>
                 <th>diskon (%)</th>
                 <th>disable</th>
@@ -23,6 +22,7 @@
     <script type="text/javascript">
       
     $(document).ready(function() {
+        var role = $("#defaultForm-role").val();
 
         $('.btn-tambah-produk').on('click',function(){
 
@@ -30,6 +30,7 @@
             $("#modalproduk #update-produk").addClass('hidden');
             $("#modalproduk #submit-produk").removeClass('hidden');
             $("#modalproduk label").removeClass("active");
+            $("#modalproduk #defaultForm-status").val('1');
             $("#modalproduk #defaultForm-id").val('');
             $("#modalproduk #defaultForm-nama").val('');
             $("#modalproduk #defaultForm-kategori").val('');
@@ -61,10 +62,6 @@
                 { "data": "barang_stok" },
                 { "data": "barang_batas_stok" },
                 { "render": function(data, type, full){
-                   return formatRupiah(full['barang_harga_beli'].toString(), 'Rp. ');
-                  }
-                },
-                { "render": function(data, type, full){
                    return formatRupiah(full['barang_harga_jual'].toString(), 'Rp. ');
                   }
                 },
@@ -84,7 +81,11 @@
                   }
                 },
                 { "width": "150px", "render": function(data, type, full){
-                   return '<a class="btn-floating btn-sm btn-default mr-2 btn-edit" data-toggle="modal" data-target="#modalproduk" data-id="' + full['barang_id'] + '" title="Edit"><i class="fas fa-pen"></i></a> <a class="btn-floating btn-sm btn-danger btn-remove" data-id="' + full['barang_id'] + '" title="Delete"><i class="fas fa-trash"></i></a>';
+                    if (role!='administrator') {
+                      return '';
+                    } else {
+                     return '<a class="btn-floating btn-sm btn-default mr-2 btn-edit" data-toggle="modal" data-target="#modalproduk" data-id="' + full['barang_id'] + '" title="Edit"><i class="fas fa-pen"></i></a> <a class="btn-floating btn-sm btn-danger btn-remove" data-id="' + full['barang_id'] + '" title="Delete"><i class="fas fa-trash"></i></a>';
+                    }
                   }
                 },
             ],
@@ -103,6 +104,7 @@
                           $("#modalproduk #submit-produk").addClass('hidden');
                           $("#modalproduk label").addClass("active");
                           $("#modalproduk #defaultForm-id").val(produk_id);
+                          $("#modalproduk #defaultForm-status").val(data[0].barang_status);
                           $("#modalproduk #defaultForm-nama").val(data[0].barang_nama);
                           $("#modalproduk #defaultForm-kategori").val(data[0].barang_kategori);
                           $("#modalproduk #defaultForm-beli").val(data[0].barang_harga_beli);
@@ -137,6 +139,7 @@
                           $("#modalproduk #submit-produk").addClass('hidden');
                           $("#modalproduk label").addClass("active");
                           $("#modalproduk #defaultForm-id").val(produk_id);
+                          $("#modalproduk #defaultForm-status").val(data[0].barang_status);
                           $("#modalproduk #defaultForm-nama").val(data[0].barang_nama);
                           $("#modalproduk #defaultForm-kategori").val(data[0].barang_kategori);
                           $("#modalproduk #defaultForm-beli").val(data[0].barang_harga_beli);

@@ -1,4 +1,7 @@
-<?php $con = mysqli_connect("localhost","root","","salon_kecantikan"); ?>
+<?php 
+
+session_start();
+$con = mysqli_connect("localhost","root","","klinik_new"); ?>
 
 <!-------------- Modal tambah produk -------------->
 
@@ -14,6 +17,7 @@
       <div class="modal-body mx-3">
         <form method="post" class="form-produk">
           <input type="hidden" id="defaultForm-id" name="ip-id">
+          <input type="hidden" id="defaultForm-status" name="ip-status">
           <div class="md-form mb-0">
             <input type="text" id="defaultForm-nama" class="form-control validate mb-3" name="ip-nama">
             <label for="defaultForm-nama">Nama Produk</label>
@@ -38,10 +42,14 @@
               </select>
           </div>
           <!--<input type="hidden" id="defaultForm-beli" class="form-control validate mb-3" name="ip-beli" value="0">-->
+          <?php if ($_SESSION['role']=="administrator") { ?>
           <div class="md-form mb-0 mt-0">
             <input type="text" id="defaultForm-beli" class="form-control validate mb-3" name="ip-beli">
             <label for="defaultForm-beli">Harga Beli</label>
           </div>
+        <?php } else { ?>
+          <input type="hidden" id="defaultForm-beli" name="ip-beli" value="0">
+        <?php } ?>
           <div class="md-form mb-0 mt-0">
             <input type="text" id="defaultForm-jual" class="form-control validate mb-3" name="ip-jual">
             <label for="defaultForm-jual">Harga Jual</label>
@@ -50,11 +58,11 @@
             <input type="text" id="defaultForm-diskon" class="form-control validate mb-3" name="ip-diskon">
             <label for="defaultForm-diskon">Diskon (%)</label>
           </div>
-          <div class="md-form mb-0 mt-0 hidden">
+          <div class="md-form mb-0 mt-0">
             <input type="text" id="defaultForm-komisi" class="form-control validate mb-3" name="ip-komisi">
             <label for="defaultForm-komisi">Komisi</label>
           </div>
-          <div class="md-form mb-0 mt-0 hidden">
+          <div class="md-form mb-0 mt-0">
             <input type="text" id="defaultForm-komisi-dokter" class="form-control validate mb-3" name="ip-komisi-dokter">
             <label for="defaultForm-komisi-dokter">Komisi Dokter</label>
           </div>
@@ -123,6 +131,7 @@
         data.append('ip-stok', $("#defaultForm-stok").val());
         data.append('ip-batas-stok', $("#defaultForm-batas-stok").val());
         data.append('ip-disable', $("#defaultForm-disable").val());
+        data.append('ip-status', $("#defaultForm-status").val());
         data.append('inputfile', $("#image")[0].files[0]);
 
         console.log(data);
@@ -156,6 +165,7 @@
         data.append('ip-setstok', $("#defaultForm-setstok").val());
         data.append('ip-stok', $("#defaultForm-stok").val());
         data.append('ip-batas-stok', $("#defaultForm-batas-stok").val());
+        data.append('ip-status', $("#defaultForm-status").val());
         data.append('ip-disable', $("#defaultForm-disable").val());
         data.append('inputfile', $("#image")[0].files[0]);
 

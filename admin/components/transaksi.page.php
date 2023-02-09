@@ -10,91 +10,97 @@
 					</div>
 
 					<div class="col-md-4 position-relative box-right">
-						<div class="row">
-							<div class="col-md-12 position-fixed info-color text-white col-right"></div>
-							<div class="col-md-12">
-								<h3 class="text-white pt-3 float-left">Order List</h3>
-								<span class="text-white pt-4 float-right" id="datetime"></span>
-								<div class="clear"></div>
-								<!-- Search form 
-								<div class="form-inline md-form form-sm mt-2 mb-2 form-search info-color-dark">
-									<input class="form-control form-control-sm text-white " type="text" placeholder="Cari Menu"
-									    aria-label="Search" id="carimenu">
-									<i class="fas fa-search text-white" aria-hidden="true"></i>
-								</div>
-								-->
-							</div>
-							<div class="col-md-12 text-white mt-0 fadeIn animated info-color-dark pt-3 pb-1" id="listmember">
-								<table style="width: 100%;"></table>
-							</div>
-							<div class="col-md-12 text-white mt-3 fadeIn animated" id="listitem">
-								<table class="pt-2 pb-2"></table>
-							</div>
-							<?php
-							if ($pajakresto==1) {
-								
-							}
+					
 
-							?>
-							<div class="col-md-12 box-bottom info-color-dark pt-2">
-								<div class="row text-white">
-									<div class="col-md-4"><p class="h6">Subtotal</p></div>
-									<div class="col-md-8 text-right"><p class="h5" id="subtotal"></p></div>
-								</div>
-								<div class="row text-white">
-									<div class="col-md-4"><p class="h6 text-jenisdiskon"></p></div>
-									<div class="col-md-8 text-right"><p class="h5 text-jumlahdiskon" id="dicount"></p></div>
-								</div>
-								<div class="row text-white">
-									<div class="col-md-4"><p class="h6">Tax</p></div>
-									<div class="col-md-8 text-right"><p class="h5" id="pajak"></p></div>
-								</div>
-								<?php 
-								if ($pajakservice!=0) {
-								?>
-									<div class="row text-white">
-										<div class="col-md-4"><p class="h6">Tax Service</p></div>
-										<div class="col-md-8 text-right"><p class="h5" id="pajakservice"></p></div>
+							<div class="row">
+								<div class="col-md-12 position-fixed info-color text-white col-right"></div>
+								<div class="col-md-12">
+									<h3 class="text-white pt-3 float-left">Order List</h3>
+									<span class="text-white pt-4 float-right" id="datetime"></span>
+									<div class="clear"></div>
+									<!-- Search form 
+									<div class="form-inline md-form form-sm mt-2 mb-2 form-search info-color-dark">
+										<input class="form-control form-control-sm text-white " type="text" placeholder="Cari Menu"
+										    aria-label="Search" id="carimenu">
+										<i class="fas fa-search text-white" aria-hidden="true"></i>
 									</div>
+									-->
+								</div>
+								<div class="col-md-12 text-white mt-0 fadeIn animated info-color-dark pt-3 pb-1" id="listmember">
+									<table style="width: 100%;"></table>
+								</div>
+								<div class="col-md-12 text-white mt-3 fadeIn animated" id="listitem">
+									<table class="pt-2 pb-2"></table>
+								</div>
 								<?php
+								if ($pajakresto==1) {
+									
 								}
+
 								?>
-								<div class="row text-white border-top pt-1">
-									<div class="col-md-4"><p class="h1 mb-0">Total</p></div>
-									<div class="col-md-8 text-right"><p class="h1 mb-0" id="total"></p></div>
-								</div>
-
-							    <input type="hidden" id="defaultForm-tax" name="ip-tax" value="">
-							    <input type="hidden" id="defaultForm-servicetax" name="ip-servicetax" value="">
-							    <input type="hidden" id="defaultForm-subtotal" name="ip-subtotal" value="">
-							    <input type="hidden" id="defaultForm-total" name="ip-total" value="">
-							    <input type="hidden" id="defaultForm-jenisdiskon" name="ip-jenisdiskon" value="">
-							    <input type="hidden" id="defaultForm-jumlahdiskon" name="ip-jumlahdiskon" value="0">
-								<div class="row pt-0 pb-2">
-									<div class="col-md-6 btn-bottom">
-										<div class="row">
-											<div class="col-md-6 p-0">
-												<button type="button" class="btn btn-white waves-effect text-danger" id="batal"><i class="fas fa-trash m-0"></i>Batal</button>
-											</div>
-											<!--
-											<div class="col-md-4 p-0">
-												<a href="print/nota-temp.print.php?ordertype=<?php echo $_SESSION['order_type']; ?>" class="btn btn-white waves-effect text-warning" id="print" target="_blank"><i class="fas fa-print m-0"></i>Print</a>
-											</div>
-											-->
-											<div class="col-md-6 p-0">
-												<button type="button" class="btn btn-white waves-effect text-warning" id="discount" data-toggle="modal" data-target="#modaldiscount"><i class="fas fa-tag m-0"></i>Discount</button>
-											</div>
-											
+								<div class="col-md-12 box-bottom info-color-dark pt-2">
+									<div class="row text-white">
+										<div class="col-md-4"><p class="h6">Subtotal</p></div>
+										<div class="col-md-8 text-right"><p class="h5" id="subtotal"></p></div>
+									</div>
+									<div class="row text-white">
+										<div class="col-md-4"><p class="h6 text-jenisdiskon"></p></div>
+										<div class="col-md-8 text-right"><p class="h5 text-jumlahdiskon" id="dicount"></p></div>
+									</div>
+									<div class="row text-white">
+										<div class="col-md-4"><p class="h6">Tax</p></div>
+										<div class="col-md-8 text-right"><p class="h5" id="pajak"></p></div>
+									</div>
+									<?php 
+									if ($pajakservice!=0) {
+									?>
+										<div class="row text-white">
+											<div class="col-md-4"><p class="h6">Tax Service</p></div>
+											<div class="col-md-8 text-right"><p class="h5" id="pajakservice"></p></div>
 										</div>
+									<?php
+									}
+									?>
+									<div class="row text-white border-top pt-1">
+										<div class="col-md-4"><p class="h1 mb-0">Total</p></div>
+										<div class="col-md-8 text-right"><p class="h1 mb-0" id="total"></p></div>
+									</div>
 
+								    <input type="hidden" id="defaultForm-status" name="ip-status" value="0">
+								    <input type="hidden" id="defaultForm-tax" name="ip-tax" value="">
+								    <input type="hidden" id="defaultForm-servicetax" name="ip-servicetax" value="">
+								    <input type="hidden" id="defaultForm-subtotal" name="ip-subtotal" value="">
+								    <input type="hidden" id="defaultForm-total" name="ip-total" value="">
+								    <input type="hidden" id="defaultForm-jenisdiskon" name="ip-jenisdiskon" value="">
+								    <input type="hidden" id="defaultForm-jumlahdiskon" name="ip-jumlahdiskon" value="0">
+									<div class="row pt-0 pb-2">
+										<div class="col-md-6 btn-bottom">
+											<div class="row">
+												<div class="col-md-6 p-0">
+													<button type="button" class="btn btn-white waves-effect text-danger" id="batal"><i class="fas fa-trash m-0"></i>Batal</button>
+												</div>
+												<!--
+												<div class="col-md-4 p-0">
+													<a href="print/nota-temp.print.php?ordertype=<?php echo $_SESSION['order_type']; ?>" class="btn btn-white waves-effect text-warning" id="print" target="_blank"><i class="fas fa-print m-0"></i>Print</a>
+												</div>
+												<div class="col-md-6 p-0">
+													<button type="button" class="btn btn-white waves-effect text-warning" id="discount" data-toggle="modal" data-target="#modaldiscount"><i class="fas fa-tag m-0"></i>Discount</button>
+												</div>
+												-->
+												
+											</div>
+
+										</div>
+										<!--<div class="col-md-6 btn-bottom pr-1">
+											<button type="button" class="btn btn-white waves-effect text-info" id="bayar" data-toggle="modal" data-target="#modaltransaksi" disabled="true"><i class="fas fa-money-bill m-0"></i>Bayar</button>
+										</div>-->
+										<div class="col-md-6 btn-bottom pr-1">
+											<button type="button" class="btn btn-white waves-effect text-info" id="bayar" data-toggle="modal" data-target="#modaltransaksi" disabled="true"><i class="fas fa-money-bill m-0"></i>Bayar</button>
+										</div>
 									</div>
-									<div class="col-md-6 btn-bottom pr-1">
-										<button type="button" class="btn btn-white waves-effect text-info" id="bayar" data-toggle="modal" data-target="#modaltransaksi" disabled="true"><i class="fas fa-money-bill m-0"></i>Bayar</button>
-									</div>
+									
 								</div>
-								
 							</div>
-						</div>
 					</div>
 				</div>
 		    </div>
@@ -105,10 +111,11 @@
 
 	<?php include 'modals/transaksi.modal.php'; ?>
 	<?php include 'modals/discount.modal.php'; ?>
+
+
 <script type="text/javascript">
 	$(document).ready(function(){
-
-		$.ajax({
+			$.ajax({
             type:'POST',
             url:'api/view.api.php?func=list-member-temp',
             dataType: "json",
@@ -122,7 +129,6 @@
                 }
             }
         });
-
 	    $('.ordertype').on('click',function(){
 			var id = $(this).data('id');
 
@@ -134,10 +140,10 @@
                 success:function(data){
                 	$('#defaultForm-ordertype').val(data[0]);
 
-					$('#bayar').removeAttr("disabled");
-					$('.ordertype').removeAttr("disabled");
-					$('#'+data[0]).attr("disabled","true");
-					$('.container__load').load('components/content/transaksi.content.php?kond=home');
+									$('#bayar').removeAttr("disabled");
+									$('.ordertype').removeAttr("disabled");
+									$('#'+data[0]).attr("disabled","true");
+									$('.container__load').load('components/content/transaksi.content.php?kond=transaksi');
                 	/*
                 	if (data[0]=="dinein") {}
                 		ordertype
@@ -154,7 +160,7 @@
 		
 		}, 1000);
 
-		$('.container__load').load('components/content/transaksi.content.php?kond=home');
+		$('.container__load').load('components/content/transaksi.content.php?kond=transaksi');
 
 		$('#carimenu').bind("enterKey",function(e){
 			var search = $(this).val();
@@ -189,7 +195,7 @@
                 dataType: "json",
                 success: function() {
                   	console.log("delete sukses")
-					$('.container__load').load('components/content/transaksi.content.php?kond=home');
+					$('.container__load').load('components/content/transaksi.content.php?kond=transaksi');
 		        	$('#listitem table').empty();
 		        	$('#subtotal').empty();
 		        	$('#subtotal').append('Rp. 0');
@@ -199,10 +205,10 @@
             });
 		});
 
-
 		$('#bayar').on('click',function(){
 		    $("#totaltransaksi").empty();
 		    $("#totaltransaksi").append($("#total").text());
+        	$('#defaultForm-statusmodal').val($("#defaultForm-status").val());
         	$('#defaultForm-totalmodal').val($("#defaultForm-total").val());
 
 
@@ -229,6 +235,43 @@
 		    });
 			
 		});
+		/*
+		$('#bayar').on('click',function(e){
+        e.preventDefault();
+        var data = new FormData();
+        data.append('ip-status', 0);
+
+		    $.ajax({
+          type: 'POST',
+          url: "controllers/transaksi.ctrl.php?ket=prosestransaksi",
+          data: data,
+          cache: false,
+          processData: false,
+          contentType: false,
+          success: function(data) {
+            console.log(data);
+          
+            
+            $('.container__load').load('components/content/transaksi.content.php?kond=transaksi');
+            $('#listitem table').empty();
+            $('#subtotal').empty();
+            $('#subtotal').append('Rp. 0');
+            $('#pajak').empty();
+            $('#pajak').append('Rp. 0');
+            $('#total').empty();
+            $('#total').append('Rp. 0');
+            $('.text-jenisdiskon').empty();
+            $('.text-jumlahdiskon').empty();
+            $('#bayar').attr("disabled","true");
+            $('#listmember table').empty();
+
+            
+          }
+        });
+
+			
+		});
+		*/
 
 	});
 </script>

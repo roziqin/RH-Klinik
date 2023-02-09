@@ -5,15 +5,10 @@
         <thead>
             <tr>
                 <th>nama</th>
+                <th>status</th>
                 <th></th>
             </tr>
         </thead>
-        <tfoot>
-            <tr>
-                <th>nama</th>
-                <th></th>
-            </tr>
-        </tfoot>
     </table>
 
 
@@ -24,6 +19,7 @@
     	
       	$('.btn-tambah-jenis').on('click',function(){
             $("#modaltambahjenis #defaultForm-nama").val('');
+            $("#modaltambahjenis #defaultForm-status").val('');
             $("#modaltambahjenis #submit-jenis").removeClass('hidden');
             $("#modaltambahjenis #update-jenis").addClass('hidden');
             $('#modaltambahjenis h4.modal-title').text('Tambah Jenis');
@@ -40,6 +36,15 @@
             "deferRender": true,
             "columns": [
                 { "data": "jenis_nama" },
+
+                { "width": "200px", "render": function(data, type, full){
+                  if (full['jenis_status']==0) {
+                    return 'Skincare';
+                  } else {
+                    return 'Apotek';
+                  }
+                }
+                },
 
                 { "width": "150px", "render": function(data, type, full){
                    return '<a class="btn-floating btn-sm btn-default mr-2 btn-edit" data-toggle="modal" data-target="#modaltambahjenis" data-id="' + full['jenis_id'] + '" title="Edit"><i class="fas fa-pen"></i></a> <a class="btn-floating btn-sm btn-danger btn-remove" data-id="' + full['jenis_id'] + '" title="Delete"><i class="fas fa-trash"></i></a>';
@@ -62,6 +67,7 @@
                           $("#modaltambahjenis label").addClass("active");
                           $("#modaltambahjenis #defaultForm-id").val(data[0].jenis_id);
                           $("#modaltambahjenis #defaultForm-nama").val(data[0].jenis_nama);
+                          $("#modaltambahjenis #defaultForm-status").val(data[0].jenis_status);
 
                       }
                   });
@@ -84,6 +90,7 @@
                           $("#modaltambahjenis label").addClass("active");
                           $("#modaltambahjenis #defaultForm-id").val(data[0].jenis_id);
                           $("#modaltambahjenis #defaultForm-nama").val(data[0].jenis_nama);
+                          $("#modaltambahjenis #defaultForm-status").val(data[0].jenis_status);
 
                       }
                   });

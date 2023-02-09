@@ -11,8 +11,9 @@ if($_GET['ket']=='submit-user'){
 	$user = $_POST['ip-user'];
 	$password = md5($_POST['ip-password']);
 	$roles = $_POST['ip-roles'];
+	$gaji = $_POST['ip-gaji'];
 
-	$sql = "INSERT into users(name,username,password,role,remember_token)values('$nama','$user','$password','$roles','0')";
+	$sql = "INSERT into users(name,username,password,role,remember_token,gaji)values('$nama','$user','$password','$roles','0','$gaji')";
 
 	mysqli_query($con,$sql);
 	
@@ -24,11 +25,12 @@ if($_GET['ket']=='submit-user'){
 	$user = $_POST['ip-user'];
 	$password = md5($_POST['ip-password']);
 	$roles = $_POST['ip-roles'];
+	$gaji = $_POST['ip-gaji'];
 	
 	if ($_POST['ip-password']!='') {
-		$sql="UPDATE users set name='$nama',username='$user',password='$password',role='$roles' where id='$id'";
+		$sql="UPDATE users set name='$nama',username='$user',password='$password',role='$roles',gaji='$gaji' where id='$id'";
 	} else {
-		$sql="UPDATE users set name='$nama',username='$user',role='$roles' where id='$id'";
+		$sql="UPDATE users set name='$nama',username='$user',role='$roles',gaji='$gaji' where id='$id'";
 	}
 	mysqli_query($con,$sql);
 	

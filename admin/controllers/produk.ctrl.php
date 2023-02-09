@@ -11,6 +11,7 @@ if($_GET['ket']=='submit-produk'){
 	$kategori = $_POST['ip-kategori'];
 	$beli = $_POST['ip-beli'];
 	$jual = $_POST['ip-jual'];
+	$status = $_POST['ip-status'];
 	$diskon = $_POST['ip-diskon'];
 	$komisi = $_POST['ip-komisi'];
 	$komisidokter = $_POST['ip-komisi-dokter'];
@@ -33,11 +34,11 @@ if($_GET['ket']=='submit-produk'){
 		$file_tmp = $_FILES['inputfile']['tmp_name'];
 		move_uploaded_file($file_tmp, '../../assets/img/produk/'.$logo);
 
-		$sql = "INSERT into barang(barang_nama,barang_kategori,barang_harga_beli,barang_harga_jual,barang_diskon,barang_set_stok,barang_stok,barang_batas_stok,barang_disable,barang_image,barang_komisi, barang_komisi_dokter)values('$nama','$kategori','$beli','$jual','$diskon','$setstok','$stok','$batas','$disable','$logo','$komisi','$komisidokter')";
+		$sql = "INSERT into barang(barang_nama,barang_kategori,barang_harga_beli,barang_harga_jual,barang_diskon,barang_set_stok,barang_stok,barang_batas_stok,barang_disable,barang_image,barang_komisi, barang_komisi_dokter,barang_status)values('$nama','$kategori','$beli','$jual','$diskon','$setstok','$stok','$batas','$disable','$logo','$komisi','$komisidokter','$status')";
 
 		echo $logo;
 	} else {
-		$sql = "INSERT into barang(barang_nama,barang_kategori,barang_harga_beli,barang_harga_jual,barang_diskon,barang_set_stok,barang_stok,barang_batas_stok,barang_disable,barang_komisi, barang_komisi_dokter)values('$nama','$kategori','$beli','$jual','$diskon','$setstok','$stok','$batas','$disable','$komisi','$komisidokter')";
+		$sql = "INSERT into barang(barang_nama,barang_kategori,barang_harga_beli,barang_harga_jual,barang_diskon,barang_set_stok,barang_stok,barang_batas_stok,barang_disable,barang_komisi, barang_komisi_dokter, barang_status)values('$nama','$kategori','$beli','$jual','$diskon','$setstok','$stok','$batas','$disable','$komisi','$komisidokter','$status')";
 
 	}
 
@@ -52,6 +53,7 @@ if($_GET['ket']=='submit-produk'){
 	$beli = $_POST['ip-beli'];
 	$jual = $_POST['ip-jual'];
 	$diskon = $_POST['ip-diskon'];
+	$status = $_POST['ip-status'];
 	$komisi = $_POST['ip-komisi'];
 	$komisidokter = $_POST['ip-komisi-dokter'];
 	if ($_POST['ip-setstok']=='') {
@@ -80,11 +82,11 @@ if($_GET['ket']=='submit-produk'){
 		$file_tmp = $_FILES['inputfile']['tmp_name'];
 		move_uploaded_file($file_tmp, '../../assets/img/produk/'.$logo);
 
-		$sql="UPDATE barang set barang_nama='$nama',barang_kategori='$kategori',barang_harga_beli='$beli',barang_harga_jual='$jual',barang_diskon='$diskon',barang_set_stok='$setstok',barang_stok='$stok',barang_batas_stok='$batas',barang_disable='$disable', barang_image='$logo', barang_komisi='$komisi', barang_komisi_dokter='$komisidokter' where barang_id='$id'";
+		$sql="UPDATE barang set barang_nama='$nama',barang_kategori='$kategori',barang_harga_beli='$beli',barang_harga_jual='$jual',barang_diskon='$diskon',barang_set_stok='$setstok',barang_stok='$stok',barang_batas_stok='$batas',barang_disable='$disable', barang_image='$logo', barang_komisi='$komisi', barang_komisi_dokter='$komisidokter', barang_status='$status' where barang_id='$id'";
 
 		echo $logo;
 	} else {
-		$sql="UPDATE barang set barang_nama='$nama',barang_kategori='$kategori',barang_harga_beli='$beli',barang_harga_jual='$jual',barang_diskon='$diskon',barang_set_stok='$setstok',barang_stok='$stok',barang_batas_stok='$batas',barang_disable='$disable', barang_komisi='$komisi', barang_komisi_dokter='$komisidokter' where barang_id='$id'";
+		$sql="UPDATE barang set barang_nama='$nama',barang_kategori='$kategori',barang_harga_beli='$beli',barang_harga_jual='$jual',barang_diskon='$diskon',barang_set_stok='$setstok',barang_stok='$stok',barang_batas_stok='$batas',barang_disable='$disable', barang_komisi='$komisi', barang_komisi_dokter='$komisidokter', barang_status='$status' where barang_id='$id'";
 
 	}
 

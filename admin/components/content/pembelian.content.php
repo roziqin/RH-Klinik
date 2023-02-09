@@ -1,6 +1,6 @@
 <?php 
 session_start();
-$con = mysqli_connect("localhost","root","","salon_kecantikan");
+$con = mysqli_connect("localhost","root","","klinik_new");
 include '../../../include/format_rupiah.php';
 
 $kond = $_GET['kond'];

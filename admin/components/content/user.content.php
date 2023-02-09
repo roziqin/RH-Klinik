@@ -30,6 +30,7 @@
             $("#modaluser #defaultForm-nama").val('');
             $("#modaluser #defaultForm-user").val('');
             $("#modaluser #defaultForm-password").val('');
+            $("#modaluser #defaultForm-gaji").val('');
             $("#modaluser #defaultForm-roles").val('');
             $("#modaluser #submit-user").removeClass('hidden');
             $("#modaluser #update-user").addClass('hidden');
@@ -101,6 +102,7 @@
                           $("#modaluser #defaultForm-id").val(data[0].id);
                           $("#modaluser #defaultForm-nama").val(data[0].name);
                           $("#modaluser #defaultForm-user").val(data[0].username);
+                          $("#modaluser #defaultForm-gaji").val(data[0].gaji);
                           $("#modaluser #defaultForm-password").val('');
                           $("#modaluser #defaultForm-roles").val(data[0].role);
 

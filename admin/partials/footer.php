@@ -10,6 +10,7 @@
 <script type="text/javascript" src="../assets/js/jquery-confirm.min.js"></script>
 <script type="text/javascript" src="../assets/js/jquery.price_format.2.0.js"></script>
 <script type="text/javascript" src="../assets/js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript" src="../assets/js/select2/select2.full.min.js"></script>
 
 
 <script type="text/javascript"> 

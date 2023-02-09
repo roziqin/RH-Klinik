@@ -13,10 +13,7 @@
         <div class="modal-body mx-3">
             <input type="hidden" id="defaultForm-id" name="ip-id">
             <input type="hidden" id="defaultForm-no" name="ip-no">
-            <div class="md-form mb-0">
-              <input type="text" id="defaultForm-rm" class="form-control validate mb-3" name="ip-rm">
-              <label for="defaultForm-rm">No RM</label>
-            </div>
+              <input type="hidden" id="defaultForm-rm" class="form-control validate mb-3" name="ip-rm">
             <div class="md-form mb-0">
               <input type="text" id="defaultForm-nama" class="form-control validate mb-3" name="ip-nama">
               <label for="defaultForm-nama">Nama</label>
@@ -71,12 +68,7 @@
         e.preventDefault();
         var id = $("#modalmember #defaultForm-id").val();
         var rm = $("#modalmember #defaultForm-rm").val();
-        $.ajax({
-          type: 'POST',
-          dataType: "json",
-          url: "controllers/member.ctrl.php?ket=cek-rm-member&rm="+rm+"&id="+id+"",
-          success: function(data) {
-            if (data[0]=="kosong") {
+ 
               var data = $('#modalmember .form-member').serialize();
               
               $.ajax({
@@ -100,30 +92,14 @@
                   $('.container__load').load('components/content/member.content.php');
                 }
               });
-              
-            } else {
-              alert("No. Rm Sudah dipakai, gunakan No. yang lain");
-
-            }
-
-          }
-        });
       });   
 
 
       $("#update-member").click(function(e){
         e.preventDefault();
-        var id = $("#modalmember #defaultForm-id").val();
-        var rm = $("#modalmember #defaultForm-rm").val();
+        
+        var data = $('#modalmember .form-member').serialize();
         $.ajax({
-          type: 'POST',
-          dataType: "json",
-          url: "controllers/member.ctrl.php?ket=cek-rm-member&rm="+rm+"&id="+id+"",
-          success: function(data) {
-            if (data[0]=="kosong") {
-              var data = $('#modalmember .form-member').serialize();
-              
-              $.ajax({
                 type: 'POST',
                 url: "controllers/member.ctrl.php?ket=update-member",
                 data: data,
@@ -144,14 +120,6 @@
                   $('.container__load').load('components/content/member.content.php');
                 }
               });
-              
-            } else {
-              alert("No. Rm Sudah dipakai, gunakan No. yang lain");
-
-            }
-
-          }
-        });
         
         
       

@@ -1,4 +1,4 @@
-<?php $con = mysqli_connect("localhost","root","","salon_kecantikan"); ?>
+<?php $con = mysqli_connect("localhost","root","","klinik_new"); ?>
 <!-------------- Modal tambah kategori -------------->
 
 <div class="modal fade" id="modaluser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -43,6 +43,10 @@
                   }
                 ?>
                 </select>
+            </div>
+            <div class="md-form mb-0">
+              <input type="text" id="defaultForm-gaji" class="form-control validate mb-3" name="ip-gaji">
+              <label for="defaultForm-gaji">Gaji</label>
             </div>
         </div>
         <div class="modal-footer d-flex justify-content-center">
@@ -103,6 +107,10 @@
                 ?>
                 </select>
             </div>
+            <div class="md-form mb-0">
+              <input type="text" id="defaultForm-gaji" class="form-control validate mb-3" name="ip-gaji">
+              <label for="defaultForm-gaji">Gaji</label>
+            </div>
         </div>
         <div class="modal-footer d-flex justify-content-center">
           <button class="btn btn-primary" id="update-user" data-dismiss="modal" aria-label="Close">Proses</button>
@@ -133,6 +141,9 @@
             $('#table-user').DataTable().ajax.reload();
             $("#modaluser #defaultForm-nama").val('');
             $("#modaluser #defaultForm-jenis").val('');
+            $("#modaluser #defaultForm-gaji").val('');
+            $("#modaluser #defaultForm-user").val('');
+            $("#modaluser #defaultForm-password").val('');
           }
         });
       });   
@@ -149,6 +160,9 @@
             $('#table-user').DataTable().ajax.reload();
             $("#modaluser #defaultForm-nama").val('');
             $("#modaluser #defaultForm-jenis").val('');
+            $("#modaluser #defaultForm-gaji").val('');
+            $("#modaluser #defaultForm-user").val('');
+            $("#modaluser #defaultForm-password").val('');
           }
         });
       }); 
