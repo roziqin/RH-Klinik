@@ -20,7 +20,7 @@ else{
                 <div class="row">
 
                   <!-- Grid column -->
-                  <div class="col-lg-4 col-md-12 mb-4 text-center">
+                  <div class="col-lg-3 col-md-12 mb-4 text-center">
 
                     <!-- Card -->
                     <div class="card hoverable">
@@ -43,7 +43,7 @@ else{
                   <!-- Grid column -->
 
                   <!-- Grid column -->
-                  <div class="col-lg-4 col-md-12 mb-4 text-center">
+                  <div class="col-lg-3 col-md-12 mb-4 text-center">
 
                     <!-- Card -->
                     <div class="card purple-gradient hoverable text-white">
@@ -66,7 +66,7 @@ else{
                   <!-- Grid column -->
 
                   <!-- Grid column -->
-                  <div class="col-lg-4 col-md-12 mb-4 text-center">
+                  <div class="col-lg-3 col-md-12 mb-4 text-center">
 
                     <!-- Card -->
                     <div class="card hoverable">
@@ -80,6 +80,29 @@ else{
                         </div>
 
                         <a class="btn btn-light-blue btn-rounded waves-effect waves-light pilih" data-ket="pendaftaran">Pilih</a>
+
+                      </div>
+                    </div>
+                    <!-- Card -->
+
+                  </div>
+                  <!-- Grid column -->
+
+                  <!-- Grid column -->
+                  <div class="col-lg-3 col-md-12 mb-4 text-center">
+
+                    <!-- Card -->
+                    <div class="card purple-gradient hoverable text-white">
+                      <div class="card-body">
+
+                        <h5>Gudang</h5>
+                        <div class="d-flex justify-content-center mt-3 mb-4">
+                          <div class="card-circle d-flex justify-content-center align-items-center">
+                            <i class="fas fa-warehouse white-text"></i>
+                          </div>
+                        </div>
+
+                        <a class="btn btn-outline-white btn-rounded waves-effect waves-light pilih" data-ket="gudang">Pilih</a>
 
                       </div>
                     </div>
@@ -152,6 +175,7 @@ else{
             var url_kasir    = 'admin/?menu=transaksi';
             var url_kasirapotek    = 'admin/?menu=apotek';
             var url_member    = 'admin/?menu=member';
+            var url_gudang    = 'admin/?menu=transaksigudang';
             
             //Ubah tulisan pada button saat click login
             
@@ -174,6 +198,8 @@ else{
                         window.location = url_kasirapotek;
                     } else if (pesan=='pendaftaran') {
                         window.location = url_member;
+                    } else if (pesan=='gudang') {
+                        window.location = url_gudang;
                     }
                     else if (pesan=='salah') {
                         alert("Username atau Password Salah !");

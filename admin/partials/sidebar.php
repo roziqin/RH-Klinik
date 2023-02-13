@@ -10,7 +10,7 @@
 		    <li>
 		    	<div class="logo-wrapper sn-ad-avatar-wrapper">
 		        	<a href="#" class="grey-text"><img src="../assets/img/avatar-1.png"
-		            class="rounded-circle"><span><?php echo $_SESSION['role']." ".$_SESSION['name']; ?></span></a>
+		            class="rounded-circle"></a>
 		      	</div>
 		    </li>
 		    <!--/. Logo -->
@@ -95,7 +95,26 @@
 					        <a class="waves-effect grey-text" href="?menu=member" data-toggle="tooltip" title="Member"><i class="sv-slim-icon fas fa-address-book"></i>Member</a>
 				        </li>
 
+					<?php } elseif ($_SESSION['role']=="admingudang") { ?>
 
+						<!--<li class="menu-item">
+					        <a class="waves-effect grey-text" href="?menu=transaksigudangumum" data-toggle="tooltip" title="Transaksi Umum"><i class="sv-slim-icon fas fa-shopping-basket"></i>Transaksi Umum</a>
+						</li>-->
+						<li class="menu-item">
+					        <a class="waves-effect grey-text" href="?menu=transaksigudang" data-toggle="tooltip" title="Transaksi Gudang"><i class="sv-slim-icon fas fa-shopping-basket"></i>Transaksi Gudang</a>
+						</li>
+						<li class="menu-item">
+					        <a class="waves-effect grey-text" href="?menu=transaksibarangmasuk" data-toggle="tooltip" title="Transaksi Barang Masuk"><i class="sv-slim-icon fas fa-cart-plus"></i>Transaksi Barang Masuk</a>
+						</li>
+						<li class="menu-item">
+					        <a class="waves-effect grey-text" href="?menu=produk" data-toggle="tooltip" title="Produk"><i class="sv-slim-icon fas fa-box-open"></i>Produk</a>
+				        </li>
+						<li class="menu-item ">
+					        <a class="waves-effect grey-text" href="?menu=stokgudang" data-toggle="tooltip" title="Stok Gudang"><i class="sv-slim-icon fas fa-clipboard-list"></i>Stok Gudang</a>
+				        </li>
+				        <li class="menu-item">
+					        <a class="waves-effect grey-text" href="?menu=laporan" data-toggle="tooltip" title="Laporan"><i class="sv-slim-icon fas fa-chart-bar"></i>Laporan</a>
+				        </li>
 					<?php } else { ?>  
 						<?php if ($_SESSION['type']=="klinik") { ?>
 						<li class="menu-item">

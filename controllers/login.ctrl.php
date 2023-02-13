@@ -8,8 +8,7 @@
 
 	include "../config/database.php";
 		
-	if($_SERVER["REQUEST_METHOD"] == "POST")
-	{
+	if($_SERVER["REQUEST_METHOD"] == "POST") {
 		
 		date_default_timezone_set('Asia/jakarta');
 		$tgl=date('Y-m-j');
@@ -29,7 +28,7 @@
 
 		
 		if($a!='') {
-			$x="INSERT into log_user(user,login)values('$a','$tgl2')";
+			$x="INSERT into log_user(user,login,logout)values('$a','$tgl2','0000-00-00 00:00:00')";
 			mysqli_query($con, $x);
 			$_SESSION['login_user']	=$a;
 			$_SESSION['name']		= $data['name'];
@@ -43,7 +42,9 @@
 		} else {
 			echo 'salah';
 		}
+		
 
 
 
 	}
+?>

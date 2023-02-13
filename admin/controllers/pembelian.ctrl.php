@@ -187,7 +187,7 @@ if($_GET['ket']=='tambahmenu'){
 		$awal=$datastok['barang_stok'];
     	$jml_stok = $awal + $jumlah;
 
-    	$sql1 = "INSERT into log_stok(user,barang,stok_awal,stok_jumlah,tanggal,keterangan)values('$user','$barang','$awal','$jml_stok','$tgl','tambah')";
+    	$sql1 = "INSERT into log_stok(user,barang,stok_awal,stok_jumlah,tanggal,keterangan,tempat)values('$user','$barang','$awal','$jml_stok','$tgl','tambah','Toko')";
 		mysqli_query($con,$sql1);
     
         $sqlupdatestok = "UPDATE barang SET barang_stok='$jml_stok' WHERE barang_id='$barang'";

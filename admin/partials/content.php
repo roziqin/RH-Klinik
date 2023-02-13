@@ -23,9 +23,25 @@
 
         include "components/pembelian.page.php";
 
-    }  elseif ($_GET['menu']=='stok') {
+    } elseif ($_GET['menu']=='transaksigudang') {
+
+        include "components/transaksigudang.page.php";
+
+    } elseif ($_GET['menu']=='transaksigudangumum') {
+
+        include "components/transaksigudangumum.page.php";
+
+    } elseif ($_GET['menu']=='transaksibarangmasuk') {
+
+        include "components/transaksibarangmasuk.page.php";
+
+    } elseif ($_GET['menu']=='stok') {
 
         include "components/stok.page.php";
+
+    } elseif ($_GET['menu']=='stokgudang') {
+
+        include "components/stokgudang.page.php";
 
     } elseif ($_GET['menu']=='produk') {
 

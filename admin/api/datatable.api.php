@@ -67,6 +67,38 @@ if ($_GET['ket']=='produk') {
 	$sql_count = mysqli_num_rows($sql); // Hitung data yg ada pada query $sql
 	$query = "SELECT * FROM barang where barang_set_stok=1 and (barang_nama LIKE '%".$search."%')";
 	
+} elseif ($_GET['ket']=='stokgudang') {
+
+
+	$sql = mysqli_query($con, "SELECT barang_id FROM barang"); // Query untuk menghitung seluruh data siswa
+	$sql_count = mysqli_num_rows($sql); // Hitung data yg ada pada query $sql
+	$query = "SELECT * FROM barang where (barang_nama LIKE '%".$search."%')";
+	
+
+} elseif ($_GET['ket']=='stoklaporan') {
+
+
+	$sql = mysqli_query($con, "SELECT barang_id FROM barang where barang_stok NOT LIKE '0' "); // Query untuk menghitung seluruh data siswa
+	$sql_count = mysqli_num_rows($sql); // Hitung data yg ada pada query $sql
+	$query = "SELECT * FROM barang where barang_stok NOT LIKE '0' and (barang_nama LIKE '%".$search."%')";
+
+	
+} elseif ($_GET['ket']=='cekstok') {
+
+
+	$sql = mysqli_query($con, "SELECT barang_id FROM barang WHERE barang_status=1 "); // Query untuk menghitung seluruh data siswa
+	$sql_count = mysqli_num_rows($sql); // Hitung data yg ada pada query $sql
+	$query = "SELECT * FROM barang where barang_status=1 and (barang_nama LIKE '%".$search."%')";
+
+
+} elseif ($_GET['ket']=='cekstokgudang') {
+
+
+	$sql = mysqli_query($con, "SELECT barang_id FROM barang WHERE barang_gudang_status=1 "); // Query untuk menghitung seluruh data siswa
+	$sql_count = mysqli_num_rows($sql); // Hitung data yg ada pada query $sql
+	$query = "SELECT * FROM barang where barang_gudang_status=1 and (barang_nama LIKE '%".$search."%')";
+
+
 }
 
 $order_field = $_POST['order'][0]['column']; // Untuk mengambil nama field yg menjadi acuan untuk sorting
